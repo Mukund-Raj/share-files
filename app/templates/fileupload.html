@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/file_upload.css') }}">
+    <script src="{{url_for('static',filename='js/sending_file_to_server.js')}}"></script>
+    <title>Upload File</title>
+
+</head>
+<body>
+    <div class="main">
+        <div class="form-container">
+            <form action="" enctype="multipart/form-data" method="POST">
+                <input type="file" name="name"  id="file1" multiple>
+                <progress id="progressbar" value="0" max="100" 
+                style="width: 300px;"></progress>
+                <h1 id="status"></h1>
+                
+                <p id="loaded-data">0</p>
+                <p id="size"></p>                
+                
+                <!--<input type="submit" value="Submit" onclick="send_file(this)">
+                -->
+                <p class="info"><b>The files will be stored in 1 shared files folder in E drive</b> </p>
+            </form>
+            <button onclick="send_file()" autofocus>Submit</button>
+        </div>
+    </div>
+</body>
+</html>
