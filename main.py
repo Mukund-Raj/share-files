@@ -1,3 +1,5 @@
+#!E:\flask_tutorial\venv\Scripts\python.exe
+
 from app import flask_app
 
 
