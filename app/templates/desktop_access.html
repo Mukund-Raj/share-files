@@ -5,6 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="static\css\desktop_access.css">
+    <script>
+        
+        
+        function sendRequest(thelink,optionValue)
+        {
+            var xhr=new XMLHttpRequest();
+            xhr.open('POST','http://127.0.0.1:9999/decision',true);
+            xhr.setRequestHeader('Content-type','application/json;charset=utf-8');
+            var data={};
+            data.link=thelink
+            data.option=optionValue;
+            
+            xhr.send(JSON.stringify(data));
+
+            console.log(xhr.responseText);
+        }
+
+        function downloadit(link)
+        {
+            //console.log('working');
+            console.log(link.parentElement.getElementsByTagName('a')[0].href);
+            sendRequest(link.parentElement.getElementsByTagName('a')[0].href,1);
+            
+        }
+
+        function showit(link)
+        {
+            sendRequest(link.parentElement.getElementsByTagName('a')[0].href,0);
+        }
+        
+    </script>
     <title>Document</title>
 </head>
 <body>
@@ -22,9 +53,18 @@
         <div class="main--container">
             {% if links %}
             {% for link in links %}          
-              
             <div class="files--container">
-                <a href="{{link}}"> <p> {{ links[link] }} </p> </a>
+                
+                {% if link['option']==2 %}
+                <a href="{{link['href']}}"> <p> {{ link['content'] }} </p> </a>
+                <button class="show" onclick="showit(this)">Show</button>
+                <button class="download"  onclick="downloadit(this)">Download</button>
+                
+                {% else %}
+                <a href="{{link['href']}}" style="width: auto;"> <p> {{ link['content'] }} </p> </a>
+                <button class="show" style="display: none;" >Show</button>
+                <button class="download" style="display: none;">Download</button>
+                {% endif %}
             </div>
             {% endfor %}
             {% else %}

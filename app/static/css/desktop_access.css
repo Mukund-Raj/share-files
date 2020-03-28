@@ -51,7 +51,7 @@ nav ul li a{
     flex-direction: column;
 }
 .files--container{
-    display: block;  
+    display: flex;  
     border-radius: 3rem;
     box-shadow: -1px -6px 20px 1px rgb(204, 204, 204);
     padding: 0.7rem;
@@ -60,9 +60,11 @@ nav ul li a{
     scrollbar-width: none;
     overflow-x: scroll;
 }
-
 .files--container a{
-    display: block;
+    display: flex;
+    flex-grow: 2;
+    width: 1rem;
+    margin-right: 0.9rem;
 }
 .files--container a p
 {
@@ -143,6 +145,34 @@ a{
 
 .destination :hover{
    border-color: aquamarine;
+}
+
+
+.show{
+    margin-right: 0.4rem;
+}
+
+.show,.download{
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    background-color: white;
+    border: 0.1rem solid black;
+    box-sizing: border-box;
+    text-rendering: optimizeSpeed;
+    letter-spacing: 1px;
+    border-radius: 4rem;
+    
+    cursor: pointer;
+    font-family: 'sans-serif','consalas', 'Nunito','Hansief';
+    
+    font-weight: 800;
+    color: black;
+}
+
+.show:hover,.download:hover{
+    background-color: rgb(78, 250, 250);
+    box-shadow: 9px -1px 20px 5px rgb(219, 219, 219);
 }
 
 

@@ -28,7 +28,7 @@ function send_file()
         if(event.lengthComputable)
         {
             //console.log(event.loaded + " out of "+event.total);
-            var time = new Date().getSeconds();
+            //var time = new Date().getSeconds();
             
 
         //console.log( ((event.total/Math.pow(2,20)) - event.loaded/Math.pow(2,20)).toFixed(2)) ;// ).toFixed(2))
