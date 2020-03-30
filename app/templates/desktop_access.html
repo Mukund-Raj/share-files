@@ -18,8 +18,8 @@
             data.option=optionValue;
             
             xhr.send(JSON.stringify(data));
-
-            console.log(xhr.responseText);
+        
+            console.log(xhr.responseType);
         }
 
         function downloadit(link)
@@ -45,9 +45,9 @@
                 <button><a href="/">HOME</a></button> 
             </div>
             <ul>
-                <li><a href="get?file=C:\\">C </a></li>
-                <li><a href="get?file=E:\\">E </a></li>
-                <li><a href="get?file=F:\\">F </a></li>
+                <li><a href="get?file=C:\">C </a></li>
+                <li><a href="get?file=E:\">E </a></li>
+                <li><a href="get?file=F:\">F </a></li>
             </ul>
         </nav>
         <div class="main--container">
@@ -56,14 +56,16 @@
             <div class="files--container">
                 
                 {% if link['option']==2 %}
-                <a href="{{link['href']}}"> <p> {{ link['content'] }} </p> </a>
-                <button class="show" onclick="showit(this)">Show</button>
-                <button class="download"  onclick="downloadit(this)">Download</button>
-                
+                <a href="javascript:void(0);"> <p> {{ link['content'] }} </p> </a>
+                <button class="show"><a href="{{link['href']}}">Show</a></button>
+            <button class="download"><a href="{{link['href']}}" download="{{ link['content'] }}">Download</a></button>
+                {% elif link['option']==1 %}
+                <a href="javascript:void(0);"> <p> {{ link['content'] }} </p> </a>           
+                <button class="download"><a href="{{link['href']}}" download="{{ link['content'] }}">Download</a></button>
                 {% else %}
                 <a href="{{link['href']}}" style="width: auto;"> <p> {{ link['content'] }} </p> </a>
-                <button class="show" style="display: none;" >Show</button>
-                <button class="download" style="display: none;">Download</button>
+                <button class="show" style="display: none;" ></button>
+                <button class="download" style="display: none;"></button>
                 {% endif %}
             </div>
             {% endfor %}

@@ -38,7 +38,7 @@ def getIP():
 #actual running for the server
 def runTheServer():
     print(thisPCIP)
-    flask_app.run(host = "127.0.0.1",port = thisPCPORT,debug=1)
+    flask_app.run(host = thisPCIP,port = thisPCPORT,debug=1)
 
 
 if __name__ == "__main__":

@@ -167,9 +167,20 @@ a{
     font-family: 'sans-serif','consalas', 'Nunito','Hansief';
     
     font-weight: 800;
-    color: black;
+    
 }
 
+.download{
+    margin-left: 0.4rem;
+}
+.download  a{
+    margin:auto;
+    width: auto;
+    color: black;
+}
+.show a{
+    color: black;
+}
 .show:hover,.download:hover{
     background-color: rgb(78, 250, 250);
     box-shadow: 9px -1px 20px 5px rgb(219, 219, 219);

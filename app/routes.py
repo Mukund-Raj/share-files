@@ -1,18 +1,23 @@
 from app import flask_app
-import urllib
+import urllib.parse
 from flask import request,send_file,render_template
 import os
 import json
 import mimetypes 
 import posixpath
 
-supported_mimetypes=['.jpg','.png','.mp4','.txt','.mp3'] 
+supported_mimetypes=['.jpg','.png','.mp4','.txt','.mp3','.avi','.py','.c','.cpp'] 
 mimetypes.init()
 
 #opening config file getting drive to which file should be saved
 cfgfile = open('app/config.json','r')
 cfg = json.load(cfgfile)
 savepath=cfg['drive']+':\\'+cfg['dfolder']+'\\'
+
+
+@flask_app.route('/dtest')
+def downloadtest():
+    return render_template('dtest.html')
 
 @flask_app.route('/')
 def index():
@@ -28,17 +33,22 @@ def showORdownload():
     if request.method=='POST':
         if request.is_json:
             file_choice = request.get_json()
+            filename = urllib.parse.urlparse(file_choice['link']).query.split('=')[-1]
+            filename = urllib.parse.unquote(filename)
+            filename = os.path.normpath(filename)
 
+            print(file_choice['link'])
             if file_choice['option']:
                 print("user wants to download")
-                
-                #return send_file(, as_attachment = False,attachment_filename = nameOfFile)
+                #getting the filename from the link
+                return send_file(filename, as_attachment = True)
             else:
                 print("user wants to see")
-            print(file_choice['link'])
+                return send_file(filename, as_attachment = False)
             #print(request.get_json())
 
     return "ok",200
+
 
 @flask_app.route('/get')
 def send_from_computer():
@@ -49,33 +59,40 @@ def send_from_computer():
         print(request.args)
         filename = request.args['file']
 
-        #print(filename)
         #different links for downloading and viewing the file and openng the dirs
-        
+        filename=os.path.normpath(filename)
+        print(filename)
         if os.path.isdir(filename):
             if os.path.exists(filename):
                 dirc=os.listdir(filename)
                 for content in dirc:
+                    #the actual link used in the directory
+                    link=filename + '\\' +urllib.parse.quote(content,errors='surrogatepass')     
                     
-                    link=filename + "\\" +urllib.parse.quote(content,errors='surrogatepass')     
+                    #for python to check for the directory
+                    dir_link = filename+'\\'+content
+                    print(link)
+                    
 
                     href=f"get?file={link}"
                     single_content={}
-                    if os.path.isdir(link):
+                    if os.path.isdir(dir_link):
                         #links.append(f"<a href='get?file={link}'><p>{content}\\</p></a>")
                         #links[href]=content+"/"
                         single_content['href']=href
-                        single_content['content']=content+"/"
+                        single_content['content']=content+"\\"
                     else:
                         #links.append(f"<a href='get?file={link}'><p>{content}\\</p></a>")
                         #links[href]=content
                         single_content['href']=href
                         single_content['content']=content
-                    
+                        
                         base,ext=posixpath.splitext(content)
-                        if ext in supported_mimetypes:
+                        if ext.lower() in supported_mimetypes:
                             #print(ext)
                             single_content['option']=2
+                        else:
+                            single_content['option']=1
                     links.append(single_content)
                     
             
@@ -93,14 +110,14 @@ def send_from_computer():
             base,ext=posixpath.splitext(nameOfFile)
             print("base ",base)
             print(ext)
-            if ext in supported_mimetypes:
+            #if ext in supported_mimetypes:
                 #return send_file(filename, as_attachment = True)
-                return send_file(filename, as_attachment = False,attachment_filename = nameOfFile)
+                #return send_file(filename, as_attachment = False,attachment_filename = nameOfFile)
                 #render_template('video_player.html',fileName=filename)
                 #print(mimetypes.types_map[ext])
-            else:
+            #else:
             #print(nameOfFile)
-                return send_file(filename, as_attachment = True,attachment_filename = nameOfFile)
+            return send_file(filename)
             #return f"{filename} is a file",200
         
     return render_template('desktop_access.html',links = links)
