@@ -180,6 +180,10 @@ a{
 }
 .show a{
     color: black;
+    margin: auto;
+    width: -moz-fit-content;
+    width: fit-content  ;
+
 }
 .show:hover,.download:hover{
     background-color: rgb(78, 250, 250);

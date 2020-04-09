@@ -5,12 +5,15 @@ import os
 import json
 import mimetypes 
 import posixpath
+from app import config_file_path,ip_file_path
 
 supported_mimetypes=['.jpg','.png','.mp4','.txt','.mp3','.avi','.py','.c','.cpp'] 
 mimetypes.init()
 
+
 #opening config file getting drive to which file should be saved
-cfgfile = open('app/config.json','r')
+cfgfile = open(config_file_path,'r')
+
 cfg = json.load(cfgfile)
 savepath=cfg['drive']+':\\'+cfg['dfolder']+'\\'
 
@@ -26,7 +29,7 @@ def index():
 @flask_app.route('/images')
 def only_images():
     return render_template('only_images.html')
-
+'''
 #return send_file(filename,as_attachment=True)
 @flask_app.route('/decision',methods=['GET','POST'])
 def showORdownload():
@@ -37,18 +40,18 @@ def showORdownload():
             filename = urllib.parse.unquote(filename)
             filename = os.path.normpath(filename)
 
-            print(file_choice['link'])
+            #print(file_choice['link'])
             if file_choice['option']:
-                print("user wants to download")
+                #print("user wants to download")
                 #getting the filename from the link
                 return send_file(filename, as_attachment = True)
             else:
-                print("user wants to see")
+                #print("user wants to see")
                 return send_file(filename, as_attachment = False)
             #print(request.get_json())
 
     return "ok",200
-
+'''
 
 @flask_app.route('/get')
 def send_from_computer():
@@ -56,12 +59,12 @@ def send_from_computer():
     links=[]
     if request.args:
         print('working')
-        print(request.args)
+        #print(request.args)
         filename = request.args['file']
 
         #different links for downloading and viewing the file and openng the dirs
         filename=os.path.normpath(filename)
-        print(filename)
+        #print(filename)
         if os.path.isdir(filename):
             if os.path.exists(filename):
                 dirc=os.listdir(filename)
@@ -71,7 +74,7 @@ def send_from_computer():
                     
                     #for python to check for the directory
                     dir_link = filename+'\\'+content
-                    print(link)
+                    #print(link)
                     
 
                     href=f"get?file={link}"
@@ -96,60 +99,43 @@ def send_from_computer():
                     links.append(single_content)
                     
             
-                #print()
-                #print(type(links))
-                #print(links)
-                #for link in links:
-                    #print(link)
                 return render_template('desktop_access.html',links = links)
-                #print(os.listdir(filename))
-                #return ('<br>').join(links),200 #f"{filename} is a directory",200
-        
+
         if os.path.isfile(filename):
             nameOfFile = str(filename).split('\\')[-1]
             base,ext=posixpath.splitext(nameOfFile)
-            print("base ",base)
-            print(ext)
-            #if ext in supported_mimetypes:
-                #return send_file(filename, as_attachment = True)
-                #return send_file(filename, as_attachment = False,attachment_filename = nameOfFile)
-                #render_template('video_player.html',fileName=filename)
-                #print(mimetypes.types_map[ext])
-            #else:
-            #print(nameOfFile)
             return send_file(filename)
-            #return f"{filename} is a file",200
         
     return render_template('desktop_access.html',links = links)
     
-    #return "<a href='get?file=E:\'>E:\</a>",200
     
     """
     return '''<a href='send?file=E:\Ball in  a cup-32Bit\Ball in a cup.exe'>Ball in cup.exe</a><br>
     <a href='send?file=E:\Ball In A Cup 32 Bit Last update\Ball in a cup 32 Bit.zip'>Ball in cup last update.exe</a>
     <br>
     """
-    
+
+
 @flask_app.route('/upload')
 def receive_the_files():
-    return render_template('fileupload.html')
+    
+    return render_template('fileupload.html',file_save_path = savepath)
+
 
 @flask_app.route('/file_dest')
 def handle_file_destination():
+    #to be implemented
     pass
     #return render_template('fileupload.html')
 
 
-
 @flask_app.route('/receivedata',methods=['POST'])
 def receive_data():
-    #if not os.path.exists('E:\\1 Shared files\\'):
-        #os.mkdir('E:\\1 Shared files\\')
     if not os.path.exists(savepath):
         os.mkdir(savepath)
-    print("working")
+    #print("working")
     if request.method == 'POST':
-        print("working")
+        #print("working")
         if request.files:
             files = request.files.getlist('file1')
            

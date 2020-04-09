@@ -1,5 +1,5 @@
 #!E:\flask_tutorial\venv\Scripts\python.exe
-from app import flask_app
+from app import flask_app,config_file_path,ip_file_path
 from app.config import drives
 import argparse
 import re
@@ -13,9 +13,10 @@ IPregex = '''^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(
             25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.( 
             25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)'''
 
+#path for the ip file
 
 def saveIP():
-    ip = open("app/ip.json","w")
+    ip = open(ip_file_path,"w")
     currentIP ={}
     currentIP['ipaddr'] = args.ip
     json.dump(currentIP,ip)
@@ -23,7 +24,7 @@ def saveIP():
 
 #return the saved IP address if the user had wished to do so
 def getIP():
-    ipfile = open("app/ip.json",'r')
+    ipfile = open(ip_file_path,'r')
     
     currentIP = json.load(ipfile)
     
@@ -37,8 +38,9 @@ def getIP():
 
 #actual running for the server
 def runTheServer():
-    print(thisPCIP)
-    flask_app.run(host = thisPCIP,port = thisPCPORT,debug=1)
+    print()
+    flask_app.run(host = thisPCIP,port = thisPCPORT,debug=0)
+    print("GO TO ",thisPCIP,':',thisPCPORT,' to share files')
 
 
 if __name__ == "__main__":
@@ -55,7 +57,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     #start config file
-    configfile = open("app/config.json",'r+')
+    configfile = open(config_file_path,'r+')
 
     cfg = json.load(configfile)
     if not cfg['configured']:
@@ -90,29 +92,27 @@ if __name__ == "__main__":
             #if ip.json file exists then simply store the IP in that file
             thisPCIP = args.ip
             if args.s:
-                if os.path.exists("app/ip.json"):
+                if os.path.exists(ip_file_path):
                     saveIP()
                 #otherwise create it
                 else:
-                    open("app/ip.json")
+                    open(ip_file_path)
                     saveIP()
             runTheServer()
         else:
             print("invalid ip,please enter a valid IP")
 
     else:
-        if os.path.exists("app/ip.json"):
+        if os.path.exists(ip_file_path):
             #print("yes file  exists")
             thisPCIP = getIP()
             runTheServer()
         else:
-            with open("app/ip.json",'w') as ipfile:
+            with open(ip_file_path) as ipfile:
                 currentIP  = {}
                 currentIP['ipaddr'] = "-1"
                 json.dump(currentIP,ipfile)
 
             print("IP doesn't exist please specify IP via -ip = 'IP address'\n for help enter share.py --help or -h")
             sys.exit("NO USER IP PRESENT")
-
-
     

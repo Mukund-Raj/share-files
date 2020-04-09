@@ -11,8 +11,6 @@ function send_file()
     var file1=document.getElementById('file1');
     var total_size = 0;
 
-    var time_reamin = 0;
-    var previous_loaded_data = 0;
     var formdata=new FormData();
     for(var i=0;i<document.getElementById('file1').files.length;i++)
         {
