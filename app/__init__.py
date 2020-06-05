@@ -1,8 +1,10 @@
 from flask import Flask
 import os
-import json
+from json import dump,load
 
 flask_app=Flask(__name__)
+flask_app.config.TEMPLATES_AUTO_RELOAD = True
+
 
 current_path = os.path.abspath(__path__[0])
 config_file_folder = 'config Files'
@@ -16,7 +18,7 @@ if not os.path.exists(ip_file_path):
     currentIP  = {}
     currentIP['ipaddr'] = "-1"
 
-    json.dump(currentIP,ip)
+    dump(currentIP,ip)
     ip.close()
 
 if not os.path.exists(config_file_path):
@@ -25,7 +27,7 @@ if not os.path.exists(config_file_path):
     configInfo['configured'] = 0
     configInfo['drive'] = ""
     configInfo['dfolder'] = "1 Shared files1"
-    json.dump(configInfo,configFile)
+    dump(configInfo,configFile)
     configFile.close()
 
 

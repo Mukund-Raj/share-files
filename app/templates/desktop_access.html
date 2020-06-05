@@ -36,7 +36,7 @@
         }
         
     </script>
-    <title>Document</title>
+    <title>This PC Files</title>
 </head>
 <body>
     <main>
@@ -45,9 +45,13 @@
                 <button><a href="/">HOME</a></button> 
             </div>
             <ul>
-                <li><a href="get?file=C:\">C </a></li>
-                <li><a href="get?file=E:\">E </a></li>
-                <li><a href="get?file=F:\">F </a></li>
+                {% for drive in all_drives %}
+                <li><a href="get?file={{drive}}\">{{drive[0]}} </a></li>
+                {% endfor %}
+                <!--
+                    <li><a href="get?file=E:\">E </a></li>
+                    <li><a href="get?file=F:\">F </a></li>
+                -->
             </ul>
         </nav>
         <div class="main--container">
@@ -56,16 +60,20 @@
             <div class="files--container">
                 
                 {% if link['option']==2 %}
-                <a href="javascript:void(0);"> <p> {{ link['content'] }} </p> </a>
+                <a href="javascript:void(0);"> <p> {{ link['content'] }} </p> 
+                    <h6 class="ext">{{link['ext']}}</h6>
+                </a>
                 <button class="show"><a href="{{link['href']}}">Show</a></button>
-            <button class="download"><a href="{{link['href']}}" download="{{ link['content'] }}">Download</a></button>
+            <button class="download"><a href="{{link['href']}}" download="{{ link['fullname'] }}">Download</a></button>
                 {% elif link['option']==1 %}
-                <a href="javascript:void(0);"> <p> {{ link['content'] }} </p> </a>           
-                <button class="download"><a href="{{link['href']}}" download="{{ link['content'] }}">Download</a></button>
+                <a href="javascript:void(0);"> <p> {{ link['content'] }} </p>
+                    <h6 class="ext">{{link['ext']}}</h6>
+                </a>           
+                <button class="download"><a href="{{link['href']}}" download="{{ link['fullname'] }}">Download</a></button>
                 {% else %}
                 <a href="{{link['href']}}" style="width: auto;"> <p> {{ link['content'] }} </p> </a>
-                <button class="show" style="display: none;" ></button>
-                <button class="download" style="display: none;"></button>
+                    <button class="show" style="display: none;" ></button>
+                    <button class="download" style="display: none;"></button>
                 {% endif %}
             </div>
             {% endfor %}

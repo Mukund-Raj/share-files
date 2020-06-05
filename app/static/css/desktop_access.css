@@ -3,6 +3,17 @@
     padding: 0;
     box-sizing: border-box;
 }
+body{
+    margin: 0;
+    font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color:#7f808c;
+    text-align: left;
+    background-color: #fff;
+}
+
 main{
     padding: 0.5rem;
     display: flex;
@@ -21,7 +32,7 @@ nav{
 nav h1{
     display: block;
     box-sizing: border-box;
-    font-family: 'consalas', 'Nunito', Arial, sans-serif;
+    
     font-size: 2rem;
     border-radius: 1rem;
     box-shadow: 0px 1px 18px 0px rgb(179, 179, 179);
@@ -43,11 +54,12 @@ nav li{
 }
 
 nav ul li a{
-    font-weight: 800;
+    font-weight: 400;
 }
 
 .main--container{
     display: flex;
+    width: auto;
     flex-direction: column;
 }
 .files--container{
@@ -57,26 +69,40 @@ nav ul li a{
     padding: 0.7rem;
     margin:0.4rem 0rem;
     align-items: center;
+    width: inherit;
     scrollbar-width: none;
     overflow-x: scroll;
 }
 .files--container a{
     display: flex;
-    flex-grow: 2;
-    width: 1rem;
+    flex-direction: row;
+    flex-basis: auto;
+    flex-grow: 1;
+    width: 2rem;
     margin-right: 0.9rem;
 }
 .files--container a p
 {
     overflow-x: scroll;
+    overflow: hidden;
     text-align: left;
+    text-overflow: ellipsis;
     padding: 0.2rem 0rem;
-    font-family: 'consalas', 'monospace', Arial, sans-serif;
     font-size: 18px;
+    font-weight: 600;
     white-space: nowrap;
     scrollbar-width: none;
-    
+    margin-right: 0.2rem;
 }
+.ext{
+    text-align: left;
+    color: red;
+    padding: 0.2rem 0rem;
+    width: -moz-fit-content;
+    font-weight: 400;
+    font-size: 18px;
+}
+
 a{
     text-decoration: none;
 }
@@ -107,7 +133,6 @@ a{
     border-radius: 4rem;
     box-shadow: 9px -1px 20px 5px rgb(219, 219, 219);
     cursor: pointer;
-    font-family: 'sans-serif','consalas', 'Nunito','Hansief';
     color: black;
 }
 .desktop button:hover{
@@ -137,7 +162,6 @@ a{
     border-radius: 4rem;
     box-shadow: 9px -1px 20px 5px rgb(219, 219, 219);
     cursor: pointer;
-    font-family: 'sans-serif','consalas', 'Nunito','Hansief';
     font-weight: 800;
     color: black;
     float: right;
@@ -164,7 +188,7 @@ a{
     border-radius: 4rem;
     
     cursor: pointer;
-    font-family: 'sans-serif','consalas', 'Nunito','Hansief';
+    
     
     font-weight: 800;
     

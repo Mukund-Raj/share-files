@@ -1,12 +1,15 @@
 #!E:\flask_tutorial\venv\Scripts\python.exe
 from app import flask_app,config_file_path,ip_file_path
-from app.config import drives
+from app.config import Getdrives
 import argparse
 import re
 import os
 import sys
 import json
 
+ISDEBUG = 1
+
+localip='127.0.0.1'
 
 IPregex = '''^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.( 
             25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.( 
@@ -39,9 +42,12 @@ def getIP():
 #actual running for the server
 def runTheServer():
     print()
-    flask_app.run(host = thisPCIP,port = thisPCPORT,debug=0)
     print("GO TO ",thisPCIP,':',thisPCPORT,' to share files')
-
+    print()
+    try:
+        flask_app.run(host = thisPCIP,port = thisPCPORT,debug=ISDEBUG)
+    except OSError:
+        print("\n\n Please connect your PC to a network\n\n")
 
 if __name__ == "__main__":
     
@@ -58,7 +64,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     #start config file
     configfile = open(config_file_path,'r+')
-
+    drives = Getdrives()
     cfg = json.load(configfile)
     if not cfg['configured']:
         print("DRIVES on your computer")

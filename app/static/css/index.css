@@ -1,83 +1,88 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-main{
+
+main {
     padding: 0.5rem;
     display: flex;
     max-width: 600px;
     flex-direction: column;
+    height: 100vh;
     margin: auto;
     text-align: center;
 }
-nav{
+
+nav {
     display: flex;
     box-sizing: border-box;
     justify-content: space-between;
     align-items: center;
-    margin-bottom:2rem;
+    margin-bottom: 2rem;
 }
-nav h1{
-    font-family: 'Roboto mono','consolas', 'Nunito', 'Arial', 'sans-serif';
+
+nav h1 {
+    font-family: 'Roboto mono', 'consolas', 'Nunito', 'Arial', 'sans-serif';
     font-size: 2rem;
     color: #e405ef;
     text-shadow: 3px -1px 8px rgb(179, 179, 179);
     padding: 0.2rem 0.4rem;
     margin: 0.2rem 0.4rem;
 }
-nav ul{
+
+nav ul {
     display: flex;
     list-style: none;
 }
-nav li{
+
+nav li {
     text-decoration: none;
     list-style: none;
-    padding:0rem 0rem;
-    margin:0rem 1.8rem;
-    
+    padding: 0rem 0rem;
+    margin: 0rem 1.8rem;
 }
 
-nav ul li a{
+nav ul li a {
     font-size: 1.8rem;
     font-weight: 900;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
     color: red;
     font-weight: 800;
 }
 
-.main--container{
+.main--container {
     display: flex;
-    height: 100vh;
     margin: auto;
+    flex-direction: column;
 }
 
-
-
-a{
+a {
     color: inherit;
     text-decoration: none;
 }
-::-webkit-scrollbar
-{
+
+::-webkit-scrollbar {
     display: none;
 }
 
-.choose
-{
+.choose {
     display: flex;
     flex-direction: row;
     margin: auto;
-    margin-top: 230px;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
-.send{
+.send {
     margin-right: 5rem;
 }
 
-.send,.receive{
+.send,
+.receive,
+.gallery {
     display: block;
     padding: 0.6rem 1rem;
     font-size: 2rem;
@@ -90,14 +95,20 @@ a{
     border-radius: 4rem;
     box-shadow: 9px -1px 20px 5px rgb(219, 219, 219);
     cursor: pointer;
-    font-family: 'sans-serif','consalas', 'Nunito','Hansief';
+    font-family: 'sans-serif', 'consalas', 'Nunito', 'Hansief';
     font-size: 2rem;
     font-weight: 800;
     color: black;
 }
 
-.choose :hover{
-   border-color: aquamarine;
+.gallery {
+    margin-top: 1rem;
 }
 
+.choose :hover {
+    border-color: aquamarine;
+}
 
+.gallery :hover {
+    border-color: aquamarine;
+}

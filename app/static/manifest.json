@@ -1,0 +1,45 @@
+{
+    "short_name":"F Share",
+    "name":"Share your files with computer",
+    "description":"Share your files with computer",
+     "share_target":{
+        "action":"/upload",
+        "method":"POST",
+        "enctype":"multipart/form-data",
+        "params": {
+            "title": "name",
+            "text": "description",
+            "url": "link"
+            },
+
+        "files":[
+            {
+                "name":"file1",
+                "accept":["audio/mpeg",".mp3"]
+            }
+             ]
+        },
+        
+    "icons":[
+        {
+            "src":"share-128x128.png",
+            "type":"image/png",
+            "sizes":"128x128"
+        },
+        {
+            "src":"share-192x192.png",
+            "type":"image/png",
+            "sizes":"192x192"
+        },
+        
+        {
+            "src":"share-512x512.png",
+            "type":"image/png",
+            "sizes":"512x512"
+        }
+    ],
+    "start_url":"/",
+    "display":"minimal-ui",
+    "background_color":"#3740ff",
+    "theme_color":"#3740ff"
+}

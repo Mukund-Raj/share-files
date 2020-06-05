@@ -13,18 +13,19 @@
         <div class="form-container">
             <form action="" enctype="multipart/form-data" method="POST">
                 <input type="file" name="name"  id="file1" multiple>
+                <p>maximum of 1.5GB size is supported in one go</p>
                 <progress id="progressbar" value="0" max="100" 
                 style="width: 300px;"></progress>
                 <h1 id="status"></h1>
                 
                 <p id="loaded-data">0</p>
-                <p id="size"></p>                
-                
-                <!--<input type="submit" value="Submit" onclick="send_file(this)">
-                -->
+                <p id="size"></p>
                 <p class="info"><b>The files will be stored in {{file_save_path}}</b> </p>
                 <br>
-                <p id="rem_time"> </p>
+                <p id="rem_time"></p>
+                <!--duplicates files info-->
+                <p id="infod">
+                </p>
             </form>
             <button onclick="send_file()" autofocus>Submit</button>
         </div>
