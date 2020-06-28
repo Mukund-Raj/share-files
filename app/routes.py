@@ -1,14 +1,17 @@
 from app import flask_app
 from urllib.parse import unquote,quote,urlparse
-from flask import request,send_file,render_template,jsonify
+from flask import request,send_file,render_template,jsonify,Response,make_response
+from io import BytesIO
 import os
 import threading
 from app.config import Getdrives
 import pathlib
+from time import sleep
 from json import dump,load
 import mimetypes 
 import posixpath
 from app import config_file_path,ip_file_path
+from shutil import make_archive
 
 supported_mimetypes=['.jpg','.png','.mp4','.txt','.mp3','.avi','.py','.c','.cpp'] 
 mimetypes.init()
@@ -134,7 +137,6 @@ def send_from_computer():
                         
                         #base is the only the filename so that if the filename is big then we can see the 
                         #extension of the file
-
                         single_content['content']=base
                         single_content['ext']= ext
                         #print(content)
@@ -164,6 +166,43 @@ def send_from_computer():
     <br>
     """
 
+@flask_app.route('/folder/get')
+def download_folder_as_zip():
+    print('folder name is ',request.args.get('file'))
+    requested_folder_path = os.path.normpath(request.args.get('file').strip())
+    
+    if os.path.exists(requested_folder_path):
+        if os.path.isdir(requested_folder_path):
+            print('yes its a directory ',requested_folder_path)
+            #the folder name to be zipped with
+            zip_file_name = os.path.split(requested_folder_path)[1] + '_zip'
+            if os.path.exists(zip_file_name):
+                os.remove(zip_file_name)
+            #actual zipping of file
+            #it returns the path where the zip file being saved
+            where_my_zip_file = make_archive(zip_file_name,'zip',requested_folder_path)
+
+
+            try:
+                f = open(where_my_zip_file,'rb')
+                bytes_data = BytesIO(f.read())
+                #first read zip file data in binary mode
+                f.close()
+                #after reading the zip file data remove the file 
+                #because we are using with it should remove the file contents too after send file
+                os.remove(where_my_zip_file)
+
+                #first check whether the file exist
+                if(os.path.exists(where_my_zip_file)):
+                    print("zip file is deleted")
+                #after we send the file we will delete it
+                return send_file(bytes_data,as_attachment=True,attachment_filename=zip_file_name,mimetype='application/zip')
+
+            except Exception as e:
+                reponse = make_response("File can't be zipped ",e)
+                return reponse
+            
+
 
 @flask_app.route('/upload')
 def receive_the_files():
@@ -183,6 +222,8 @@ def save_file(file_to_save):
     print(file_to_save.filename," saved")
 
 
+
+#called when files received from the user
 @flask_app.route('/receivedata',methods=['POST'])
 def receive_data():
     if not os.path.exists(savepath):

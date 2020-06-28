@@ -70,10 +70,11 @@
                     <h6 class="ext">{{link['ext']}}</h6>
                 </a>           
                 <button class="download"><a href="{{link['href']}}" download="{{ link['fullname'] }}">Download</a></button>
+
                 {% else %}
                 <a href="{{link['href']}}" style="width: auto;"> <p> {{ link['content'] }} </p> </a>
                     <button class="show" style="display: none;" ></button>
-                    <button class="download" style="display: none;"></button>
+                    <button class="download"><a href="/folder/{{link['href']}}">Download</a></button>
                 {% endif %}
             </div>
             {% endfor %}
