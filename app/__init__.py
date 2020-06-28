@@ -4,7 +4,7 @@ from json import dump,load
 
 flask_app=Flask(__name__)
 flask_app.config.TEMPLATES_AUTO_RELOAD = True
-
+flask_app.secret_key = 'aS1sIY4VK4Dy0S5iNTIRVKc-tEYsKrNIQs6lPHLdadI'
 
 current_path = os.path.abspath(__path__[0])
 config_file_folder = 'config Files'
