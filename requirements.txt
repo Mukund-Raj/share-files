@@ -13,5 +13,5 @@ pywin32==301
 pywin32-ctypes==0.2.0
 six==1.14.0
 urllib3==1.26.5
-Werkzeug==1.0.1
+Werkzeug==2.2.3
 WMI==1.5.1
